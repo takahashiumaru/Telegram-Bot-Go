@@ -1,4 +1,4 @@
-package handler
+package main
 
 import (
 	"log"
@@ -9,7 +9,7 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-func Handler() {
+func main() {
 	// Inisialisasi bot Telegram
 	bot, err := tgbotapi.NewBotAPI("6293769087:AAFPr1lObI0P5JlMYY7sm35R2q0SI2PKcLk")
 	if err != nil {
