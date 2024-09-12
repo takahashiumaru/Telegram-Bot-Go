@@ -6,7 +6,8 @@
       "use": "@vercel/go",
       "config": {
         "goVersion": "1.19.13",
-        "exportName": "handler"
+        "exportName": "handler",
+        "entryPoint": "main"
       }
     }
   ],
