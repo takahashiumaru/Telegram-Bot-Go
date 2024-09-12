@@ -5,7 +5,7 @@
       "src": "./main.go",
       "use": "@vercel/go",
       "config": {
-        "goVersion": "1.18"
+        "goVersion": "1.19.13"
       }
     }
   ],
