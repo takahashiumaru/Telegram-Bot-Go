@@ -2,51 +2,66 @@ package main
 
 import (
 	"log"
+	"strconv"
+	"strings"
 	"time"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 func main() {
-	bot, err := tgbotapi.NewBotAPI("-")
+	// Inisialisasi bot Telegram
+	bot, err := tgbotapi.NewBotAPI("6293769087:AAFPr1lObI0P5JlMYY7sm35R2q0SI2PKcLk")
 	if err != nil {
 		log.Panic(err)
 	}
 
-	// enable debug mode
-	bot.Debug = true
-
-	// set timeout koneksi
-	bot.Client.Timeout = 30 * time.Second
-
-	// konfigurasi update
 	updateConfig := tgbotapi.NewUpdate(0)
 	updateConfig.Timeout = 60
 
-	// dapatkan channel untuk menerima update
 	updates, err := bot.GetUpdatesChan(updateConfig)
-	if err != nil {
-		log.Panic(err)
-	}
 
 	for update := range updates {
 		if update.Message == nil {
 			continue
 		}
 
-		// proses pesan yang diterima
-		switch update.Message.Text {
-		case "/start":
-			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Halo, selamat datang di bot saya!")
-			bot.Send(msg)
-
-		case "Halo":
-			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Halo juga!")
-			bot.Send(msg)
-
-		default:
-			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Maaf, saya tidak mengerti maksud Anda.")
-			bot.Send(msg)
+		userMessage := update.Message.Text
+		now := time.Now()
+		if strings.HasPrefix(userMessage, "/hi") || strings.HasPrefix(userMessage, "/halo") {
+			reply := ""
+			hour := now.Hour()
+			if hour >= 6 && hour < 12 {
+				reply = "Selamat pagi, " + update.Message.From.UserName + "!"
+			} else if hour >= 12 && hour < 15 {
+				reply = "Selamat siang, " + update.Message.From.UserName + "!"
+			} else if hour >= 15 && hour < 18 {
+				reply = "Selamat sore, " + update.Message.From.UserName + "!"
+			} else {
+				reply = "Selamat malam, " + update.Message.From.UserName + "!"
+			}
+			sendMessage(bot, update.Message.Chat.ID, reply)
 		}
+		if strings.HasPrefix(userMessage, "/id") {
+			reply := "Ini adalah id telegram anda , " + strconv.FormatInt(int64(update.Message.From.ID), 10) + "!"
+
+			sendMessage(bot, update.Message.Chat.ID, reply)
+		}
+		if strings.HasPrefix(userMessage, "/ceksaldo") {
+			reply := "Kamu miskin tpi mau cek saldo !"
+			sendMessage(bot, update.Message.Chat.ID, reply)
+		}
+		if strings.HasPrefix(userMessage, "/nazwa") {
+			reply := "Anak kpopers yg harus di hilangkan !"
+			sendMessage(bot, update.Message.Chat.ID, reply)
+		}
+	}
+}
+
+func sendMessage(bot *tgbotapi.BotAPI, chatID int64, text string) {
+	msg := tgbotapi.NewMessage(chatID, text)
+	_, err := bot.Send(msg)
+	if err != nil {
+		log.Panic(err)
 	}
 }
