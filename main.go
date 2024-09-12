@@ -38,7 +38,21 @@ func main() {
 		fmt.Println("Message : " + update.Message.Text)
 		userMessage := update.Message.Text
 		now := times.Now()
-		if strings.Contains(userMessage, "/hi") || strings.Contains(userMessage, "/halo") {
+		if strings.Contains(userMessage, "/command") {
+			reply := "Berikut list command yang tersedia:\n\n"
+			reply += "/hi\n"
+			reply += "/halo\n"
+			reply += "/id\n"
+			reply += "/ceksaldo\n"
+			reply += "/gempa\n"
+			reply += "/listbank\n"
+			reply += "/listewalet\n"
+			reply += "/play\n"
+			reply += "/jokesorangluar\n"
+			reply += "/cuaca\n\n"
+			reply += "Ketik /<command> untuk menggunakan fitur tersebut."
+			sendMessage(bot, update.Message.Chat.ID, reply)
+		} else if strings.Contains(userMessage, "/hi") || strings.Contains(userMessage, "/halo") {
 			reply := ""
 			hour := now.Hour()
 			if hour >= 6 && hour < 12 {
@@ -274,26 +288,26 @@ func main() {
 						}
 					}
 				}
-			} else {
-				if strings.Contains(userMessage, "/") {
-					photoBytes, err := os.ReadFile("mrsbrewc.jpg")
-					if err != nil {
-						log.Println(err)
-					}
-
-					photo := tgbotapi.FileBytes{
-						Name:  "mrsbrewc.jpg",
-						Bytes: photoBytes,
-					}
-
-					photoMessage := tgbotapi.NewPhotoUpload(update.Message.Chat.ID, photo)
-					_, err = bot.Send(photoMessage)
-					if err != nil {
-						log.
-							Println(err)
-					}
-					sendMessage(bot, update.Message.Chat.ID, "kamu cabul ya")
+			}
+		} else {
+			if strings.Contains(userMessage, "/") {
+				photoBytes, err := os.ReadFile("mrsbrewc.jpg")
+				if err != nil {
+					log.Println(err)
 				}
+
+				photo := tgbotapi.FileBytes{
+					Name:  "mrsbrewc.jpg",
+					Bytes: photoBytes,
+				}
+
+				photoMessage := tgbotapi.NewPhotoUpload(update.Message.Chat.ID, photo)
+				_, err = bot.Send(photoMessage)
+				if err != nil {
+					log.
+						Println(err)
+				}
+				sendMessage(bot, update.Message.Chat.ID, "kamu cabul ya")
 			}
 		}
 	}
