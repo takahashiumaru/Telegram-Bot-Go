@@ -1,21 +1,7 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "./main.go",
-      "use": "@vercel/go",
-      "config": {
-        "goVersion": "1.19.13",
-        "exportName": "handler",
-        "entryPoint": "main"
-      }
+  "build": {
+    "env": {
+      "GO_BUILD_FLAGS": "-ldflags '-s -w'"
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "./main.go"
-    }
-  ]
+  }
 }
-
