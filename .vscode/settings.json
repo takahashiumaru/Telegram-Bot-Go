@@ -1,0 +1,21 @@
+{
+    "cSpell.customDictionaries": {
+        "custom": {
+            "name": "custom",
+            "path": "${workspaceFolder}/.cspell/custom.txt",
+            "addWords": true,
+            "scope": "folder"
+        }
+    },
+    "protoc": {
+        "path": "/Users/suhal/Documents/Development/sdk/protoc-21.0-osx-x86_64/bin/protoc",
+        "compile_on_save": false,
+        "options": [
+            "--proto_path=protos/v3",
+            "--proto_path=protos/v2",
+            "--proto_path=${workspaceRoot}/proto",
+            "--proto_path=${env.GOPATH}/src",
+            "--java_out=gen/java"
+        ]
+    }
+}
