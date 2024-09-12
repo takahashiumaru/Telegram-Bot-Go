@@ -1,7 +1,12 @@
 {
-  "build": {
-    "env": {
-      "GO_BUILD_FLAGS": "-ldflags '-s -w'"
+  "version": 2,
+  "builds": [
+    {
+      "src": "handler.go",
+      "use": "@vercel/go",
+      "config": {
+        "goVersion": "1.19.x"
+      }
     }
-  }
+  ]
 }
